@@ -1,19 +1,22 @@
 package br.com.backend.challenger.demo.domain;
 
 import br.com.backend.challenger.demo.api.PlaceRequest;
+import com.github.slugify.Slugify;
 import reactor.core.publisher.Mono;
 
 public class PlaceService {
   private PlaceRepository placeRepository;
+  private Slugify slg;
 
   public PlaceService(PlaceRepository placeRepository) {
     this.placeRepository = placeRepository;
+    this.slg = Slugify.builder().build();
   }
 
   public Mono<Place> create(PlaceRequest placeRequest) {
     var place = new Place(
             null, placeRequest.name(),
-            placeRequest.slug(),
+            slg.slugify(placeRequest.name()),
             placeRequest.state(),
             placeRequest.createdAt(),
             placeRequest.updatedAt()
