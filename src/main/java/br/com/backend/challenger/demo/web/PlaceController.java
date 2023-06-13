@@ -1,5 +1,7 @@
 package br.com.backend.challenger.demo.web;
 
+import br.com.backend.challenger.demo.api.PlaceRequest;
+import br.com.backend.challenger.demo.api.PlaceResponse;
 import br.com.backend.challenger.demo.domain.Place;
 import br.com.backend.challenger.demo.domain.PlaceService;
 import org.springframework.http.HttpStatus;
@@ -22,8 +24,8 @@ public class PlaceController {
 
 
   @PostMapping
-  public ResponseEntity<Mono<Place>> create(@RequestBody Place place) {
-    var createdPlace = placeService.create(place);
-    return ResponseEntity.status(HttpStatus.CREATED).body(createdPlace);
+  public ResponseEntity<Mono<PlaceResponse>> create(@RequestBody PlaceRequest request) {
+    var placeResponse = placeService.create(request).map(PlaceMapper::fromPlaceToResponse);
+    return ResponseEntity.status(HttpStatus.CREATED).body(placeResponse);
   }
 }
