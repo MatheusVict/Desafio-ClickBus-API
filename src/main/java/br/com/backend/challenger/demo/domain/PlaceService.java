@@ -18,8 +18,8 @@ public class PlaceService {
             null, placeRequest.name(),
             slg.slugify(placeRequest.name()),
             placeRequest.state(),
-            placeRequest.createdAt(),
-            placeRequest.updatedAt()
+            null,
+            null
     );
     return placeRepository.save(place);
   }
